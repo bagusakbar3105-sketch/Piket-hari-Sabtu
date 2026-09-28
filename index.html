@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Penentu Piket Sabtu</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- AOS Library untuk Animation on Scroll -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #f9b223;
+            --dark: #121212;
+            --dark-card: #1e1e1e;
+            --text-light: #ffffff;
+            --text-muted: #aaaaaa;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--dark);
+            color: var(--text-light);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(249, 178, 35, 0.15) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(249, 178, 35, 0.15) 0%, transparent 20%);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            padding: 30px 20px;
+            text-align: center;
+            margin: auto;
+        }
+
+        .header {
+            margin-bottom: 30px;
+        }
+
+        .header .badge {
+            background-color: var(--primary);
+            color: var(--dark);
+            padding: 6px 16px;
+            font-weight: 800;
+            border-radius: 20px;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        .header h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--text-light);
+        }
+
+        .header h1 span {
+            color: var(--primary);
+        }
+
+        /* Tombol Utama */
+        .btn-draw {
+            background: var(--primary);
+            color: var(--dark);
+            border: none;
+            padding: 18px 28px;
+            font-size: 1.1rem;
+            font-weight: 800;
+            border-radius: 12px;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(249, 178, 35, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .btn-draw:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(249, 178, 35, 0.5);
+            background: #ffbe3b;
+        }
+
+        .btn-draw:active {
+            transform: translateY(1px);
+        }
+
+        /* Container Hasil */
+        .results-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .person-card {
+            background: var(--dark-card);
+            border: 2px solid #2a2a2a;
+            border-left: 6px solid var(--primary);
+            padding: 20px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .person-card:hover {
+            border-color: var(--primary);
+            transform: translateX(5px);
+        }
+
+        .person-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .person-icon {
+            width: 45px;
+            height: 45px;
+            background: rgba(249, 178, 35, 0.1);
+            color: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .person-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--text-light);
+        }
+
+        .number-badge {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        /* Tombol Copy WA */
+        .btn-copy {
+            background: transparent;
+            border: 1px solid #333;
+            color: var(--text-muted);
+            padding: 10px 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            display: none; /* Muncul setelah tombol diklik */
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .btn-copy:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        /* Footer / Credit */
+        footer {
+            padding: 20px;
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            width: 100%;
+            border-top: 1px solid #1f1f1f;
+        }
+
+        footer strong {
+            color: var(--primary);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Header Section (AOS Fade Down) -->
+        <div class="header" data-aos="fade-down" data-aos-duration="1000">
+            <span class="badge"><i class="fa-solid fa-calendar-day"></i> Jadwal Piket</span>
+            <h1>Petugas Piket <span>Hari Sabtu</span></h1>
+        </div>
+
+        <!-- Tombol Acak (AOS Zoom In) -->
+        <button class="btn-draw" onclick="acakPiket()" data-aos="zoom-in" data-aos-delay="200">
+            <i class="fa-solid fa-dice"></i> Lihat siapa yang Piket hari Sabtu
+        </button>
+
+        <!-- Daftar Hasil Piket -->
+        <div class="results-container" id="results">
+            <!-- Hasil acakan akan muncul di sini secara dinamis -->
+        </div>
+
+        <!-- Tombol Salin -->
+        <button class="btn-copy" id="btnCopy" onclick="salinHasil()">
+            <i class="fa-regular fa-copy"></i> Salin untuk WA Grup
+        </button>
+    </div>
+
+    <!-- Credit Footer (AOS Fade Up) -->
+    <footer data-aos="fade-up" data-aos-offset="0">
+        Project by <strong>Bagus Akbar Prasetya</strong>
+    </footer>
+
+    <!-- JS AOS Library -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Inisialisasi Animation on Scroll
+        AOS.init({
+            once: true // Animasi jalan sekali saat di-scroll
+        });
+
+        // Daftar Nama Anggota
+        const anggota = [
+            "Bagus", "Agi", "Nizar", "Jagad", "Rafi", 
+            "Himyar", "Rasyid", "Tio", "Asyura", "Mufid", "Yasser"
+        ];
+
+        let petugasTerpilih = [];
+
+        function acakPiket() {
+            const resultsContainer = document.getElementById('results');
+            const btnCopy = document.getElementById('btnCopy');
+            
+            // Mengacak urutan array anggota (Fisher-Yates Shuffle)
+            let shuffled = [...anggota].sort(() => 0.5 - Math.random());
+            
+            // Ambil 3 orang pertama
+            petugasTerpilih = shuffled.slice(0, 3);
+
+            // Kosongkan tampilan sebelumnya
+            resultsContainer.innerHTML = '';
+
+            // Render 3 nama terpilih dengan animasi AOS per item
+            petugasTerpilih.forEach((nama, index) => {
+                const card = document.createElement('div');
+                card.className = 'person-card';
+                card.setAttribute('data-aos', 'fade-up');
+                card.setAttribute('data-aos-delay', (index + 1) * 150); // Efek delay bertingkat
+
+                card.innerHTML = `
+                    <div class="person-info">
+                        <div class="person-icon">
+                            <i class="fa-solid fa-broom"></i>
+                        </div>
+                        <div class="person-name">${nama}</div>
+                    </div>
+                    <div class="number-badge">Petugas #${index + 1}</div>
+                `;
+                
+                resultsContainer.appendChild(card);
+            });
+
+            // Re-initialize AOS agar animasi bekerja pada elemen yang baru dibuat
+            AOS.refresh();
+
+            // Tampilkan tombol Salin ke WA
+            btnCopy.style.display = 'flex';
+        }
+
+        function salinHasil() {
+            if (petugasTerpilih.length === 0) return;
+
+            const teks = `🧹 *PETUGAS PIKET SABTU* 🧹\n\n1. ${petugasTerpilih[0]}\n2. ${petugasTerpilih[1]}\n3. ${petugasTerpilih[2]}\n\nSemangat bersihinnya guys! ✨`;
+            
+            navigator.clipboard.writeText(teks).then(() => {
+                alert('Hasil piket berhasil disalin! Tinggal paste di WA grup.');
+            });
+        }
+    </script>
+</body>
+</html>
